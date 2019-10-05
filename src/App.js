@@ -103,7 +103,11 @@ class App extends React.Component {
         setView={this.setView}
       />
     }else if(this.state.activeView==='SetupView'){
-      view = <SetupView addPlayer={this.addPlayer} setView={this.setView}/>     
+      view = <SetupView 
+        passivePlayers={this.state.passivePlayers}
+        activePlayers={this.state.activePlayers}  
+        addPlayer={this.addPlayer} 
+        setView={this.setView}/>     
     }else{
       view = <HelpView setView={this.setView}/>
     }

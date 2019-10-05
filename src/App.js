@@ -1,7 +1,7 @@
 import React from 'react';
-import Score from './Score.js';
-import Timer from './Timer.js';
-import PlayerPane from './PlayerPane.js';
+import MatchView from './MatchView.js';
+import SetupView from './SetupView.js';
+import HelpView from './HelpView.js';
 import './App.css';
 
 class App extends React.Component {
@@ -15,7 +15,8 @@ class App extends React.Component {
       timerRunning: false,
       activePlayers: [],
       passivePlayers: [],
-      playerCount:0
+      playerCount:0,
+      activeView: 'SetupView'
     }
 
     this.toggleTimer = this.toggleTimer.bind(this);
@@ -23,6 +24,7 @@ class App extends React.Component {
     this.swapInPlayer = this.swapInPlayer.bind(this);
     this.swapOutPlayer = this.swapOutPlayer.bind(this);
     this.resetScore = this.resetScore.bind(this);
+    this.setView = this.setView.bind(this);
   }
 
   toggleTimer(){
@@ -82,59 +84,32 @@ class App extends React.Component {
     this.setState({passivePlayers: newPassivePlayers, activePlayers: newActivePlayers, timerStart: new Date() });    
   }
 
+  setView(nextView){
+    this.setState({activeView: nextView});
+  }
+
   render(){
 
-    let passivePlayerItems = this.state.passivePlayers.map((player) =>
-    <PlayerPane key={player.no}
-              value={player} clickCallback={this.swapInPlayer}  />
-    );
-
-    let activePlayerItems = this.state.activePlayers.map((player) =>
-    <PlayerPane key={player.no}
-              value={player} clickCallback={this.swapOutPlayer}  />
-    );
-
-    let timerButtonText = this.state.timerRunning? "stopp timer" : "start timer";
-
+    let view;
+    if(this.state.activeView==='MatchView'){
+      view = <MatchView 
+        passivePlayers={this.state.passivePlayers}
+        activePlayers={this.state.activePlayers}
+        swapInPlayer={this.swapInPlayer}
+        swapOutPlayer={this.swapOutPlayer}
+        timerRunning={this.state.timerRunning} 
+        timerStart={this.state.timerStart}
+        toggleTimer={this.toggleTimer}
+        setView={this.setView}
+      />
+    }else if(this.state.activeView==='SetupView'){
+      view = <SetupView addPlayer={this.addPlayer} setView={this.setView}/>     
+    }else{
+      view = <HelpView setView={this.setView}/>
+    }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <span className="center"><Score/><Timer isOn={this.state.timerRunning} start={this.state.timerStart}/><Score/></span>
-      </header>
-      <hr/>
-      <div className="activePlayers">
-        <div>Spillere på banen</div>
-        <ul>{activePlayerItems}</ul>
-      </div>
-      <hr/>
-      <div className="passivePlayers">
-        <div>Spillere på benken</div>
-        <ul>
-        {passivePlayerItems}
-        </ul>
-      </div>
-      <hr/>
-      <form onSubmit={this.addPlayer}>
-      <input id="nameInput" type="text"></input>
-      <button onClick={this.addPlayer}>legg til spiller</button>
-      </form>
-      <button onClick={this.toggleTimer}>{timerButtonText}</button>
-      <br/><br/><br/>
-      <div>
-        Dette er en veldig enkel app for å holde orden på stillingen, hvilke spillere som skal bytte
-        og hvor lenge det er siden forrige bytte.<br/>
-        <ol>
-        <li>Skriv inn spillernavn og legg til alle spillerne som skal delta</li>
-        <li>Alle spillere havner i utgangspunktet på benken</li>
-        <li>Klikk på spillerene som skal starte, disse hopper da opp i listen over spillere på banen</li>
-        <li>Når kampen starter klikker du på "start timer" knappen</li>
-        <li>Øverste navn på listene er de som har vært lengst på banen eller på benken. De er neste som skal byttes</li>
-        <li>Hver gang du gjør et bytte så resettes timer for å vise hvor lang tid det er siden forrige bytte</li>
-        <li>Trykk på pause timer når omgangen er over</li>
-        </ol>
-      </div>
-    </div>
+    <div>{view}</div>
   );
   }
 }

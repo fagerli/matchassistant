@@ -16,7 +16,9 @@ class App extends React.Component {
       activePlayers: [],
       passivePlayers: [],
       playerCount:0,
-      activeView: 'SetupView'
+      activeView: 'SetupView',
+      swapTime: 3,
+      matchDuration : 13
     }
 
     this.toggleTimer = this.toggleTimer.bind(this);
@@ -25,6 +27,9 @@ class App extends React.Component {
     this.swapOutPlayer = this.swapOutPlayer.bind(this);
     this.resetScore = this.resetScore.bind(this);
     this.setView = this.setView.bind(this);
+    this.setMatchDuration = this.setMatchDuration.bind(this);
+    this.setSwapTime = this.setSwapTime.bind(this);
+
   }
 
   toggleTimer(){
@@ -88,6 +93,14 @@ class App extends React.Component {
     this.setState({activeView: nextView});
   }
 
+  setMatchDuration(nextMatchDuration){
+    this.setState({matchDuration: nextMatchDuration});
+  }
+
+  setSwapTime(nextSwapTime){
+    this.setState({swapTime: nextSwapTime});
+  }
+
   render(){
 
     let view;
@@ -105,8 +118,12 @@ class App extends React.Component {
     }else if(this.state.activeView==='SetupView'){
       view = <SetupView 
         passivePlayers={this.state.passivePlayers}
-        activePlayers={this.state.activePlayers}  
-        addPlayer={this.addPlayer} 
+        activePlayers={this.state.activePlayers}
+        swapTime={this.state.swapTime}
+        matchDuration={this.state.matchDuration}
+        addPlayer={this.addPlayer}
+        setSwapTime={this.setSwapTime}
+        setMatchDuration={this.setMatchDuration} 
         setView={this.setView}/>     
     }else{
       view = <HelpView setView={this.setView}/>

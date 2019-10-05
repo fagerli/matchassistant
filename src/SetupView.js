@@ -8,6 +8,8 @@ class SetupView extends React.Component {
     super(props);
     this.gotoHelp = this.gotoHelp.bind(this);
     this.gotoMatch = this.gotoMatch.bind(this);
+    this.setMatchDuration = this.setMatchDuration.bind(this);
+    this.setSwapTime = this.setSwapTime.bind(this);
   }
 
   gotoHelp(){
@@ -16,6 +18,18 @@ class SetupView extends React.Component {
   
   gotoMatch(){
     this.props.setView('MatchView');
+  }
+
+  setMatchDuration(e){
+    e.preventDefault();
+    let inputfield = document.getElementById("matchDuration");
+    this.props.setMatchDuration(inputfield.value);
+  }
+
+  setSwapTime(e){
+    e.preventDefault();
+    let inputfield = document.getElementById("swapTime");
+    this.props.setSwapTime(inputfield.value);
   }
 
   render(){
@@ -36,6 +50,12 @@ class SetupView extends React.Component {
       <input id="nameInput" type="text"></input>
       <button onClick={this.props.addPlayer}>legg til spiller</button>
       </form>
+      <br/>
+      <label htmlFor="matchDuration">Kampvarighet</label>
+      <input id="matchDuration" type="number" value={this.props.matchDuration} onChange={this.setMatchDuration}></input>
+      <br/>
+      <label htmlFor="swapTime">Tid mellom bytter</label>
+      <input id="swapTime" type="number" value={this.props.swapTime} onChange={this.setSwapTime}></input>
       <button onClick={this.gotoMatch}>Match view</button>
       <button onClick={this.gotoHelp}>Hjelp</button>
     </div>

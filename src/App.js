@@ -17,8 +17,8 @@ class App extends React.Component {
       passivePlayers: [],
       playerCount:0,
       activeView: 'SetupView',
-      swapTime: 3,
-      matchDuration : 13
+      swapTime: 3*60*1000,
+      matchDuration : 13*60*1000
     }
 
     this.toggleTimer = this.toggleTimer.bind(this);
@@ -108,6 +108,7 @@ class App extends React.Component {
       view = <MatchView 
         passivePlayers={this.state.passivePlayers}
         activePlayers={this.state.activePlayers}
+        swapTime={this.state.swapTime}
         swapInPlayer={this.swapInPlayer}
         swapOutPlayer={this.swapOutPlayer}
         timerRunning={this.state.timerRunning} 

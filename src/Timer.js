@@ -3,13 +3,26 @@ class Timer extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      time: 0
+      time: 0,
+      vibrated : false
     }
     let me = this;
+    //TODO  need to clear interval when unmounting component
     setInterval(
       function(){
         if(me.props.isOn){
-          me.setState({time: Date.now() - me.props.start})
+          let newTime = Date.now() - me.props.start;
+          me.setState({time: newTime})
+          if(me.state.time > me.props.swapTime){
+            if(!me.state.vibrated){
+              window.navigator.vibrate([200, 100, 200]);
+              me.setState({vibrated:true});
+            }
+           }else{
+             if(me.state.vibrated){
+              me.setState({vibrated:false});
+             }
+           }
         }
       }  
       , 1000);
@@ -20,8 +33,14 @@ class Timer extends React.Component {
      let sec = Math.floor((this.state.time/1000) % 60);
      let minStr = min < 10 ? "0"+min : ""+min;
      let secStr = sec < 10 ? "0"+sec : ""+sec;
+
+     let decoration = "timer";
+     if(this.state.time > this.props.swapTime){
+      decoration = "redTimer"
+     }
+
     return(
-      <span className="timer">{minStr}:{secStr}</span>
+      <span className={decoration}>{minStr}:{secStr}</span>
     )
   }
 }

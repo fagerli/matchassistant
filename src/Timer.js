@@ -14,7 +14,7 @@ class Timer extends React.Component {
           me.setState({time: newTime})
           if(me.state.time > me.props.swapTime){
             if(!me.state.vibrated){
-              window.navigator.vibrate([200, 100, 200]);
+              window.navigator.vibrate([200, 100, 200, 100, 200]);
               me.setState({vibrated:true});
             }
            }else{

@@ -7,8 +7,7 @@ class Timer extends React.Component {
       vibrated : false
     }
     let me = this;
-    //TODO  need to clear interval when unmounting component
-    setInterval(
+    this.intervalID = setInterval(
       function(){
         if(me.props.isOn){
           let newTime = Date.now() - me.props.start;
@@ -28,6 +27,11 @@ class Timer extends React.Component {
       , 1000);
   }
   
+
+  componentWillUnmount(){
+    clearInterval(this.intervalID);
+  }
+
   render() {  
      let min = Math.floor((this.state.time/1000/60) << 0);
      let sec = Math.floor((this.state.time/1000) % 60);

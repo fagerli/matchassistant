@@ -8,27 +8,18 @@ class App extends React.Component {
   
   constructor(props){
     super(props)
-    this.state = {
-      home: 0,
-      away: 0,
-      timerStart: new Date(),
-      timerRunning: false,
-      activePlayers: [],
-      passivePlayers: [],
-      playerCount:0,
-      activeView: 'SetupView',
-      swapTime: 3*60*1000,
-      matchDuration : 13*60*1000
-    }
+    this.state = this.getInitStateObject();
 
     this.toggleTimer = this.toggleTimer.bind(this);
     this.addPlayer = this.addPlayer.bind(this);
+    this.deletePlayer = this.deletePlayer.bind(this);
     this.swapInPlayer = this.swapInPlayer.bind(this);
     this.swapOutPlayer = this.swapOutPlayer.bind(this);
     this.resetScore = this.resetScore.bind(this);
     this.setView = this.setView.bind(this);
     this.setMatchDuration = this.setMatchDuration.bind(this);
     this.setSwapTime = this.setSwapTime.bind(this);
+    this.clearAppState = this.clearAppState.bind(this);
 
   }
 
@@ -71,7 +62,28 @@ class App extends React.Component {
   }
 
   deletePlayer(playerNo){
-    
+    console.log("Player should have been deleted. But...  not implemented yet");
+    //search active and passive players
+    //need to ensure no collision on player IDs
+  }
+
+  clearAppState(){
+    this.setState(this.getInitStateObject());
+  }
+
+  getInitStateObject(){
+    return {
+      home: 0,
+      away: 0,
+      timerStart: new Date(),
+      timerRunning: false,
+      activePlayers: [],
+      passivePlayers: [],
+      playerCount:0,
+      activeView: 'SetupView',
+      swapTime: 3*60*1000,
+      matchDuration : 13*60*1000
+    }
   }
 
   swapInPlayer(key){
@@ -138,8 +150,10 @@ class App extends React.Component {
         swapTime={this.state.swapTime}
         matchDuration={this.state.matchDuration}
         addPlayer={this.addPlayer}
+        deletePlayer={this.deletePlayer}
         setSwapTime={this.setSwapTime}
         setMatchDuration={this.setMatchDuration} 
+        clearAppState={this.clearAppState}
         setView={this.setView}/>     
     }else{
       view = <HelpView setView={this.setView}/>

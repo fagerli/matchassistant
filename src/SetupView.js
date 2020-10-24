@@ -37,13 +37,13 @@ class SetupView extends React.Component {
     let completeList = this.props.activePlayers.concat(this.props.passivePlayers);  
     let playerItems = completeList.map((player) =>
     <PlayerPane key={player.no}
-              value={player} clickCallback={this.props.swapOutPlayer}  />
+              value={player} clickCallback={this.props.deletePlayer}  />
     );  
 
   return (
     <div className="App">
       <div className="activePlayers">
-        <div>Spillere</div>
+        <div><h1>Spillere</h1><br/></div>
         <ul>{playerItems}</ul>
       </div>
       <form onSubmit={this.addPlayer}>
@@ -60,6 +60,8 @@ class SetupView extends React.Component {
       <br/>
       <button onClick={this.gotoMatch}>Match view</button>
       <button onClick={this.gotoHelp}>Hjelp</button>
+      <hr/>
+      <button onClick={this.props.clearAppState}>Reset alt</button>
     </div>
   );
   }

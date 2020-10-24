@@ -48,6 +48,7 @@ class SetupView extends React.Component {
       </div>
       <form onSubmit={this.addPlayer}>
       <input id="nameInput" type="text"></input>
+      <br/>
       <button onClick={this.props.addPlayer}>legg til spiller</button>
       </form>
       <br/>
@@ -56,6 +57,7 @@ class SetupView extends React.Component {
       <br/>
       <label htmlFor="swapTime">Tid mellom bytter</label>
       <input id="swapTime" type="number" value={this.props.swapTime/60/1000} onChange={this.setSwapTime}></input>
+      <br/>
       <button onClick={this.gotoMatch}>Match view</button>
       <button onClick={this.gotoHelp}>Hjelp</button>
     </div>

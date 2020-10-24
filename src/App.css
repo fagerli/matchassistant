@@ -43,3 +43,5 @@ button{
 input{
    margin: 1em; 
 }
+
+label{ display:block}

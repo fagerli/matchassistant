@@ -32,6 +32,14 @@ class App extends React.Component {
 
   }
 
+  componentDidMount(){
+    let players = localStorage.getItem('MatchAssistantPlayers');
+    if(players){
+      let playerArray = JSON.parse(players);
+      this.setState({passivePlayers:playerArray,playerCount:playerArray.length});
+    }
+  }
+
   toggleTimer(){
     if(this.state.timerRunning){
       this.setState({timerRunning: false});
@@ -57,6 +65,13 @@ class App extends React.Component {
     this.setState({
       passivePlayers: tmpPassivePlayers, 
       playerCount: playerNumber });
+     
+    let playerList = tmpPassivePlayers.concat(this.state.activePlayers);
+    localStorage.setItem('MatchAssistantPlayers', JSON.stringify(playerList));  
+  }
+
+  deletePlayer(playerNo){
+    
   }
 
   swapInPlayer(key){

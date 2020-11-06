@@ -38,7 +38,14 @@ class MatchView extends React.Component {
   return (
     <div className="App">
       <header className="App-header">
-        <span className="center"><Score/><Timer isOn={this.props.timerRunning} start={this.props.timerStart} swapTime={this.props.swapTime}/><Score/></span>
+        <span className="center">
+          <Score/>
+          <span className="center">
+            <Timer isOn={this.props.timerRunning} start={this.props.timerStart} interval={this.props.matchDuration} title="Total"/>
+            <Timer isOn={this.props.timerRunning} start={this.props.swapTime} interval={this.props.swapInterval} title="Bytte"/>
+          </span>
+          <Score/>
+        </span>
       </header>
       <hr/>
       <div className="activePlayers">

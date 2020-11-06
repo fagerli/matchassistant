@@ -18,7 +18,7 @@ class App extends React.Component {
     this.resetScore = this.resetScore.bind(this);
     this.setView = this.setView.bind(this);
     this.setMatchDuration = this.setMatchDuration.bind(this);
-    this.setSwapTime = this.setSwapTime.bind(this);
+    this.setSwapInterval = this.setSwapInterval.bind(this);
     this.clearAppState = this.clearAppState.bind(this);
 
   }
@@ -35,7 +35,7 @@ class App extends React.Component {
     if(this.state.timerRunning){
       this.setState({timerRunning: false});
     }else{
-      this.setState({timerStart: new Date(), timerRunning: true});
+      this.setState({timerStart: new Date(), swapTime: new Date(), timerRunning: true});
       window.navigator.vibrate([100,30,100,30,100]);
     }
   }
@@ -76,12 +76,13 @@ class App extends React.Component {
       home: 0,
       away: 0,
       timerStart: new Date(),
+      swapTime: new Date(),
       timerRunning: false,
       activePlayers: [],
       passivePlayers: [],
       playerCount:0,
       activeView: 'SetupView',
-      swapTime: 3*60*1000,
+      swapInterval: 3*60*1000,
       matchDuration : 13*60*1000
     }
   }
@@ -98,7 +99,7 @@ class App extends React.Component {
         }
         );
     const newActivePlayers = this.state.activePlayers.concat(substitute);    
-    this.setState({passivePlayers: newPassivePlayers, activePlayers: newActivePlayers, timerStart: new Date() });    
+    this.setState({passivePlayers: newPassivePlayers, activePlayers: newActivePlayers, swapTime: new Date() });    
   }
 
   swapOutPlayer(key){
@@ -113,7 +114,7 @@ class App extends React.Component {
         }
         );
     const newPassivePlayers = this.state.passivePlayers.concat(substitute);    
-    this.setState({passivePlayers: newPassivePlayers, activePlayers: newActivePlayers, timerStart: new Date() });    
+    this.setState({passivePlayers: newPassivePlayers, activePlayers: newActivePlayers, swapTime: new Date() });    
   }
 
   setView(nextView){
@@ -124,8 +125,8 @@ class App extends React.Component {
     this.setState({matchDuration: nextMatchDuration});
   }
 
-  setSwapTime(nextSwapTime){
-    this.setState({swapTime: nextSwapTime});
+  setSwapInterval(nextSwapInterval){
+    this.setState({swapInterval: nextSwapInterval});
   }
 
   render(){
@@ -135,11 +136,13 @@ class App extends React.Component {
       view = <MatchView 
         passivePlayers={this.state.passivePlayers}
         activePlayers={this.state.activePlayers}
-        swapTime={this.state.swapTime}
+        swapInterval={this.state.swapInterval}
         swapInPlayer={this.swapInPlayer}
         swapOutPlayer={this.swapOutPlayer}
         timerRunning={this.state.timerRunning} 
         timerStart={this.state.timerStart}
+        matchDuration={this.state.matchDuration}
+        swapTime={this.state.swapTime}
         toggleTimer={this.toggleTimer}
         setView={this.setView}
       />
@@ -147,11 +150,11 @@ class App extends React.Component {
       view = <SetupView 
         passivePlayers={this.state.passivePlayers}
         activePlayers={this.state.activePlayers}
-        swapTime={this.state.swapTime}
+        swapInterval={this.state.swapInterval}
         matchDuration={this.state.matchDuration}
         addPlayer={this.addPlayer}
         deletePlayer={this.deletePlayer}
-        setSwapTime={this.setSwapTime}
+        setSwapInterval={this.setSwapInterval}
         setMatchDuration={this.setMatchDuration} 
         clearAppState={this.clearAppState}
         setView={this.setView}/>     

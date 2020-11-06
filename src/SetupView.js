@@ -9,7 +9,7 @@ class SetupView extends React.Component {
     this.gotoHelp = this.gotoHelp.bind(this);
     this.gotoMatch = this.gotoMatch.bind(this);
     this.setMatchDuration = this.setMatchDuration.bind(this);
-    this.setSwapTime = this.setSwapTime.bind(this);
+    this.setSwapInterval = this.setSwapInterval.bind(this);
   }
 
   gotoHelp(){
@@ -26,10 +26,10 @@ class SetupView extends React.Component {
     this.props.setMatchDuration(inputfield.value*60*1000);
   }
 
-  setSwapTime(e){
+  setSwapInterval(e){
     e.preventDefault();
     let inputfield = document.getElementById("swapTime");
-    this.props.setSwapTime(inputfield.value*60*1000);
+    this.props.setSwapInterval(inputfield.value*60*1000);
   }
 
   render(){
@@ -56,7 +56,7 @@ class SetupView extends React.Component {
       <input id="matchDuration" type="number" value={this.props.matchDuration/60/1000} onChange={this.setMatchDuration}></input>
       <br/>
       <label htmlFor="swapTime">Tid mellom bytter</label>
-      <input id="swapTime" type="number" value={this.props.swapTime/60/1000} onChange={this.setSwapTime}></input>
+      <input id="swapTime" type="number" value={this.props.swapInterval/60/1000} onChange={this.setSwapInterval}></input>
       <br/>
       <button onClick={this.gotoMatch}>Match view</button>
       <button onClick={this.gotoHelp}>Hjelp</button>

@@ -12,7 +12,7 @@ class Timer extends React.Component {
         if(me.props.isOn){
           let newTime = Date.now() - me.props.start;
           me.setState({time: newTime})
-          if(me.state.time > me.props.swapTime){
+          if(me.state.time > me.props.interval){
             if(!me.state.vibrated){
               window.navigator.vibrate([200, 100, 200, 100, 200]);
               me.setState({vibrated:true});
@@ -39,12 +39,17 @@ class Timer extends React.Component {
      let secStr = sec < 10 ? "0"+sec : ""+sec;
 
      let decoration = "timer";
-     if(this.state.time > this.props.swapTime){
+     if(this.state.time > this.props.interval){
       decoration = "redTimer"
      }
 
+     let title = this.props.title;
+
     return(
-      <span className={decoration}>{minStr}:{secStr}</span>
+      <div>
+        <div>{title}</div>
+        <span className={decoration} style={{display:'block'}}>{minStr}:{secStr}</span>
+      </div>
     )
   }
 }

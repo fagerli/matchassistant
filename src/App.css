@@ -2,9 +2,20 @@
     margin: 12px;
     font-size: 96px;
 }
+
+.scoreContainer{
+    display: inline-block;
+}
+
 .timer{
     font-size: xx-large;
 }
+
+.redTimer{
+    font-size: xx-large;
+    color: red;
+}
+
 .center{
     display: inline-block;
     margin: 0 auto;
